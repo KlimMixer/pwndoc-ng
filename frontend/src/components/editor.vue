@@ -639,8 +639,7 @@ export default {
     },
   },
 
-  mounted() {
-     
+  async mounted() {
      const ydoc = new Y.Doc()
      if(this.idUnique == '') {
       this.ClassEditor = uuidv4()
@@ -681,7 +680,17 @@ export default {
       ]
 
      if(this.collab){
-       this.provider = new HocuspocusProvider({
+      
+      console.log('Router is not ready');
+      await (new Promise((resolve) => {
+          this.$router.onReady(() => {
+            console.log('Router is ready');
+            resolve();
+          });
+        })
+      );
+
+      this.provider = new HocuspocusProvider({
         url: `wss://${window.location.hostname}${window.location.port != '' ? ':'+window.location.port : ''}/collab/`,
         name: this.$route.params.auditId ||  this.idUnique.replace('-', '/'),
         document  : ydoc
