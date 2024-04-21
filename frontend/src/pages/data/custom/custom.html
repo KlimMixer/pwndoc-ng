@@ -999,10 +999,11 @@
                                     hide-bottom-space
                                     >
                                         <template v-slot:control>
-                                            <basic-editor 
+                                            <basic-editor
                                             ref="basiceditor_custom" 
                                             v-model="field.text[getFieldLocaleText(idx)].value"
                                             :key="idx" 
+                                            :collab="false"
                                             /> 
                                         </template>
 

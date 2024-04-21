@@ -640,13 +640,25 @@ export default {
   },
 
   async mounted() {
+    // console.log('Router is not ready');
+    // await (new Promise((resolve) => {
+    //     this.$router.onReady(() => {
+    //       console.log('Router is ready');
+    //       resolve();
+    //     });
+    //   })
+    // );
+
+
      const ydoc = new Y.Doc()
+     console.log('idUnique: ', this.idUnique);
      if(this.idUnique == '') {
       this.ClassEditor = uuidv4()
      } else {
       this.ClassEditor = this.idUnique
      }
      this.username = UserService.user.username
+     console.log('typeof this.$route.params.findingId: ', typeof this.$route.params.findingId);
      if (typeof this.$route.params.findingId == 'undefined'){
         this.fullId=this.ClassEditor
      } else {
@@ -679,17 +691,9 @@ export default {
         Figure,
       ]
 
-     if(this.collab){
-      
-      console.log('Router is not ready');
-      await (new Promise((resolve) => {
-          this.$router.onReady(() => {
-            console.log('Router is ready');
-            resolve();
-          });
-        })
-      );
+      console.log('idUnique: ', this.idUnique.replace('-', '/'));
 
+     if(this.collab){
       this.provider = new HocuspocusProvider({
         url: `wss://${window.location.hostname}${window.location.port != '' ? ':'+window.location.port : ''}/collab/`,
         name: this.$route.params.auditId ||  this.idUnique.replace('-', '/'),
